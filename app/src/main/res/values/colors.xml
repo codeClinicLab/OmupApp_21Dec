@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#473DF8</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#473DF8</color>
+    <color name="appTextColor">#333333</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="green">#26C76A</color>
+    <color name="tab_checked">#473DF8</color>
+    <color name="tab_unchecked">@color/black</color>
+    <color name="blue">#473DF8</color>
+    <color name="grey">#F1F1F1</color>
+    <color name="red">#D80200</color>
+    <color name="black_transparent">#90000000</color>
+</resources>
+

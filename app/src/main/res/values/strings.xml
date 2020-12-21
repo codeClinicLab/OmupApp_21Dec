@@ -1,0 +1,105 @@
+<resources>
+    <string name="app_name">Omup</string>
+    <string name="pref_key">My Key</string>
+    <string name="get_started">Get Started</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="number_zero">0</string>
+    <string name="number_one">1</string>
+    <string name="number_two">2</string>
+    <string name="number_three">3</string>
+    <string name="number_four">4</string>
+    <string name="number_five">5</string>
+    <string name="number_six">6</string>
+    <string name="number_seven">7</string>
+    <string name="number_eight">8</string>
+    <string name="number_nine">9</string>
+    <string name="btn_clear">Clear</string>
+    <string name="btn_backspace">Back</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tap_to_set_contact_picture">Tap to set contact picture</string>
+    <string name="contetnt_desc_add_contact">Add picture of new contact if present</string>
+    <string name="contact_name">Contact Name</string>
+    <string name="hint_enter_name">Enter Name</string>
+    <string name="contact_phone_number">Contact Phone Number</string>
+    <string name="hint_phone_no">90 2357 9824</string>
+    <string name="create_contact">Create Contact</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="speaker">Speaker</string>
+    <string name="hold_call">Hold Call</string>
+    <string name="add_call">Add Call</string>
+    <string name="mute">Mute</string>
+    <string name="keypad">Keypad</string>
+    <string name="decline">DECLINE</string>
+    <string name="recent_calls">RECENT CALLS</string>
+    <string name="recharge_now">Recharge Now</string>
+    <string name="recent_transactions">RECENT TRANSACTIONS</string>
+    <string name="transfer_funds">Transfer Funds</string>
+    <string name="content_desc_app_logo">App Logo</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="country">Country</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="cancel">CANCEL</string>
+    <string name="okay">OKAY</string>
+    <string name="empty_text">To Start Enjoying almost free International Calls Add Your Contacts now</string>
+    <string name="add_contacts">Add Contacts</string>
+    <string name="chat">CHAT</string>
+    <string name="call">Call</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="wallet">Wallet</string>
+    <string name="invite">Invite</string>
+    <string name="calling_rates">Calling Rates</string>
+    <string name="about_us">About Us</string>
+    <string name="support">Support</string>
+    <string name="recharge_wallet">Recharge Wallet</string>
+    <string name="recharge_text">Enter the amount you want to Recharge your wallet with in Nigerian Naira</string>
+    <string name="amount">Amount</string>
+    <string name="current_balance">Current Balance</string>
+    <string name="currency">NGN</string>
+    <string name="last_recharge">Last Recharge</string>
+    <string name="add_to_contacts">Add to Contacts</string>
+    <string name="enter_a_phone_number">Enter a phone number</string>
+    <string name="astericks">*</string>
+    <string name="hash_key">#</string>
+    <string name="share_with_friends">SHARE WITH FRIENDS</string>
+    <string name="ob_boarding_four_text">To Start Enjoying almost free International calls by pressing a button</string>
+    <string name="ob_boarding_one_title">SIMPLE ABROAD CALLS</string>
+    <string name="ob_boarding_one_text">To Start Enjoying almost free International calls by pressing a button</string>
+    <string name="ob_boarding_three_title">TRANSFER FUNDS</string>
+    <string name="ob_boarding_three_text">To Start Enjoying almost free International calls by pressing a button</string>
+    <string name="ob_boarding_two_title">CHAT WITH FRIENDS</string>
+    <string name="ob_boarding_two_text">Start Enjoying almost free International calls by pressing a button</string>
+    <string name="status_key">pref_status_key</string>
+    <string name="user_data_key">pref_user_data_key</string>
+
+
+    <string-array name="country_code">
+        <item>+234</item>
+        <item>+233</item>
+        <item>+144</item>
+        <item>+222</item>
+        <item>+970</item>
+        <item>+444</item>
+        <item>+324</item>
+        <item>+213</item>
+        <item>+123</item>
+        <item>+245</item>
+        <item>+223</item>
+        <item>+741</item>
+        <item>+90</item>
+        <item>+231</item>
+        <item>+324</item>
+    </string-array>
+</resources>

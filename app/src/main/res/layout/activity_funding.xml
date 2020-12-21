@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:context="com.wordpress.herovickers.omup.destinations.FundingActivity">
+
+    <!--Toolbar-->
+    <include layout="@layout/include_app_bar" />
+    <!--Wallet Layout-->
+    <include
+        layout="@layout/include_wallet_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"/>
+    <!--Buttons Layouts host-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:padding="32dp">
+        <ImageView
+            android:id="@+id/img_recharge"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_payment_green_24dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/circle_grey"
+            android:scaleType="centerCrop"
+            android:padding="24dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp" />
+        <TextView
+            android:layout_below="@+id/img_recharge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recharge_now"
+            android:textSize="18sp"/>
+        <ImageView
+            android:id="@+id/img_transfer"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_send_black_24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/circle_grey"
+            android:scaleType="centerCrop"
+            android:padding="24dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/transfer_funds"
+            android:textSize="18sp"
+            android:layout_below="@+id/img_transfer"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+    <!--RecyclerView Layout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recent_transactions"
+            android:textColor="@color/blue"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_wallet_transactions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/transactions_item">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_home"
+        android:checked="true"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Home"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_keypad"
+        android:checked="false"
+        android:icon="@drawable/ic_dialpad_black_24dp"
+        android:title="Phone"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_contact"
+        android:checked="false"
+        android:icon="@drawable/ic_contacts_black_24dp"
+        android:title="Contacts"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_more"
+        android:checked="false"
+        android:icon="@drawable/ic_more_horiz_black_24dp"
+        android:title="More"
+        app:showAsAction="always" />
+</menu>

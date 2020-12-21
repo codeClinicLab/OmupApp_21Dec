@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "414305894919",
+    "firebase_url": "https://omupapp-29557.firebaseio.com",
+    "project_id": "omupapp-29557",
+    "storage_bucket": "omupapp-29557.appot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414305894919:android:e5a2032171ac33c2",
+        "android_client_info": {
+          "package_name": "com.wordpress.herovickers.omup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414305894919-e31hqg82ppi4em9rgcf7inrg5imm288v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wordpress.herovickers.omup",
+            "certificate_hash": "9607b87eebebafa959e91dbe6b937ab6123226"
+          }
+        },
+        {
+          "client_id": "414305894919-gk1ef5prosbqapbhlhaerpl69j95ipi6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARXdd5BsnR3gjvW7F2s23908R_MzfeDfY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414305894919-gk1ef5prosbqapbhlhaerpl69j95ipi6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

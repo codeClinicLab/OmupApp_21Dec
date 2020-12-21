@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".destinations.TransferFundActivity">
+
+    <include layout="@layout/include_app_bar"
+        android:id="@+id/toolbar_layout"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:id="@+id/scroll_View">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"><!--
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_creditcard"
+                    android:scaleType="fitCenter"/>-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Beneficiary Information"
+                    android:textSize="22sp"
+                    android:textColor="@color/blue"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Complete the Form below"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="To Account No"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"/>
+                <EditText
+                    android:id="@+id/ed_acct_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Acct No"
+                    android:padding="16dp"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:background="@drawable/blue_border_background"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Account Name"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"/>
+                <EditText
+                    android:id="@+id/ed_beneficiary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Beneficiary"
+                    android:padding="16dp"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:background="@drawable/blue_border_background"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Bank"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"/>
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@drawable/blue_border_background"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:id="@+id/sp_banks">
+
+                </Spinner>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Amount"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"/>
+                <EditText
+                    android:id="@+id/ed_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Amount"
+                    android:padding="16dp"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:background="@drawable/blue_border_background"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remarks"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
+            <EditText
+                android:id="@+id/ed_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Add Remark"
+                android:padding="16dp"
+                android:inputType="text"
+                android:maxLines="1"
+                android:background="@drawable/blue_border_background"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/btn_continue"
+                    style="@style/normal_button_blue"
+                    android:text="Continue"
+                    android:layout_margin="16dp"
+                    android:textColor="@color/white"  />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

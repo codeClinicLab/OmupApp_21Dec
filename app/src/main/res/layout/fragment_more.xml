@@ -1,0 +1,191 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context="com.wordpress.herovickers.omup.destinations.fragments.CallsFragment">
+
+    <!--Profile back layout-->
+        <LinearLayout
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_button_blue"
+            android:padding="32dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical" >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_view_contact_display"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/facebook_avatar"/>
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ogunjobi Titilayo"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:layout_marginTop="16dp"/>
+
+            <Button
+                android:id="@+id/btn_edit_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_profile"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:layout_marginTop="16dp"
+                android:textAllCaps="false"
+                android:drawablePadding="4dp"
+                android:drawableLeft="@drawable/ic_edit_black_24dp"
+                android:textColor="@color/black"
+                android:background="@drawable/round_button_white"
+                android:drawableStart="@drawable/ic_edit_black_24dp" />
+
+        </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_marginTop="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wallet"
+                android:gravity="start"
+                android:drawablePadding="16dp"
+                android:padding="16dp"
+                android:textSize="22sp"
+                android:id="@+id/funding_layout"
+                android:drawableLeft="@drawable/ic_payment_grey_24dp"
+                android:drawableRight="@drawable/ic_action_name"
+                android:drawableStart="@drawable/ic_payment_grey_24dp"
+                android:drawableEnd="@drawable/ic_action_name" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="0.02"
+                android:background="#eae5e5" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/invite"
+                android:gravity="start"
+                android:drawablePadding="16dp"
+                android:padding="16dp"
+                android:textSize="22sp"
+                android:id="@+id/invite_layout"
+                android:drawableLeft="@drawable/ic_share_grey_24dp"
+                android:drawableRight="@drawable/ic_action_name"
+                android:drawableStart="@drawable/ic_share_grey_24dp"
+                android:drawableEnd="@drawable/ic_action_name" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.02"
+                android:background="#eae5e5"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/calling_rates"
+                android:gravity="start"
+                android:drawablePadding="16dp"
+                android:padding="16dp"
+                android:textSize="22sp"
+                android:id="@+id/calling_rate_layout"
+                android:drawableLeft="@drawable/ic_call_grey_24dp"
+                android:drawableRight="@drawable/ic_action_name"
+                android:drawableStart="@drawable/ic_call_grey_24dp"
+                android:drawableEnd="@drawable/ic_action_name" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.02"
+                android:background="#eae5e5"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_us"
+                android:gravity="start"
+                android:drawablePadding="16dp"
+                android:padding="16dp"
+                android:textSize="22sp"
+                android:id="@+id/about_layout"
+                android:drawableLeft="@drawable/ic_business_center_grey_24dp"
+                android:drawableRight="@drawable/ic_action_name"
+                android:drawableStart="@drawable/ic_business_center_grey_24dp"
+                android:drawableEnd="@drawable/ic_action_name" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.02"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="#eae5e5" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/support"
+                android:gravity="start"
+                android:drawablePadding="16dp"
+                android:padding="16dp"
+                android:textSize="22sp"
+                android:id="@+id/support_layout"
+                android:drawableLeft="@drawable/ic_share_grey_24dp"
+                android:drawableRight="@drawable/ic_action_name"
+                android:drawableStart="@drawable/ic_share_grey_24dp"
+                android:drawableEnd="@drawable/ic_action_name" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="540dp" />
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+</LinearLayout>

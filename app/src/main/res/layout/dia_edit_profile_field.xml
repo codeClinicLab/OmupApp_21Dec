@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="32dp">
+    <TextView
+        android:id="@+id/field_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/first_name"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+    <EditText
+        android:id="@+id/field_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/green_border_background"
+        android:padding="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:hint="@string/hint_enter_name"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <Button
+            android:id="@+id/btn_cancel"
+            style="@style/normal_button_white"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingRight="0dp"
+            android:paddingLeft="0dp"
+            android:text="@string/cancel"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="4dp" />
+        <Button
+            android:id="@+id/btn_okay"
+            style="@style/normal_button_blue"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingRight="0dp"
+            android:paddingLeft="0dp"
+            android:text="@string/okay"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp" />
+    </LinearLayout>
+
+</LinearLayout>
