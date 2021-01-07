@@ -67,7 +67,7 @@
     <string name="recharge_text">Enter the amount you want to Recharge your wallet with in Nigerian Naira</string>
     <string name="amount">Amount</string>
     <string name="current_balance">Current Balance</string>
-    <string name="currency">NGN</string>
+    <string name="currency">US</string>
     <string name="last_recharge">Last Recharge</string>
     <string name="add_to_contacts">Add to Contacts</string>
     <string name="enter_a_phone_number">Enter a phone number</string>

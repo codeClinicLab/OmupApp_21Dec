@@ -1,10 +1,10 @@
 package com.wordpress.herovickers.omup.authentication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -16,7 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.wordpress.herovickers.omup.R;
@@ -95,7 +101,48 @@ public class ProfileInformation extends AppCompatActivity {
         String email = mEmail.getText().toString();
         String salt = PasswordUtils.getSalt(30);
         String password = PasswordUtils.generateSecurePassword(mPassword.getText().toString(), salt);
-        Map<String, Object> wallet= new HashMap<>();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        AuthCredential credential = EmailAuthProvider.getCredential(email, password);
+        auth.getCurrentUser().linkWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("TAG", "linkWithCredential:success");
+//                            FirebaseUser user = task.getResult().getUser();
+  //                          updateUI(user);
+                        } else {
+                            Log.w("TAG", "linkWithCredential:failure", task.getException());
+/*
+                            Toast.makeText(AnonymousAuthActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+*/
+                        }
+
+                        // ...
+                    }
+                });
+
+        /*credential.getCurrentUser().linkWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "linkWithCredential:success");
+                            FirebaseUser user = task.getResult().getUser();
+                            updateUI(user);
+                        } else {
+                            Log.w(TAG, "linkWithCredential:failure", task.getException());
+                            Toast.makeText(AnonymousAuthActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+
+                        // ...
+                    }
+                });
+        */Map<String, Object> wallet= new HashMap<>();
         wallet.put("balance", 0.00);
         wallet.put("lastRechargeDate", System.currentTimeMillis());
         Map<String, String> passwordMap = new HashMap<>();
@@ -104,6 +151,8 @@ public class ProfileInformation extends AppCompatActivity {
         User userInfo = new User(email, firstName, lastName,
                 user.getPhoneNumber(), "", user.getUid(),
                 wallet, country, passwordMap);
+
+
         FirestoreViewModel firestoreViewModel = ViewModelProviders.of(this).get(FirestoreViewModel.class);
         LiveData<Boolean> booleanLiveData = firestoreViewModel.saveUserData(userInfo);
         booleanLiveData.observe(this, new Observer<Boolean>() {

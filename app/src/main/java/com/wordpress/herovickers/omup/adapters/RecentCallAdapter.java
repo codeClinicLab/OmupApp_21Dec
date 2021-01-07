@@ -112,7 +112,7 @@ public class RecentCallAdapter extends RecyclerView.Adapter<RecentCallAdapter.Da
                         @Override
                         public void onChanged(User user) {
                             if (user != null){
-                                if(  String.valueOf(user.getWallet().get("balance")).equals("0.0"))
+                                if(  String.valueOf(user.getWallet().get("balance")).equals("0.0") ||   String.valueOf(user.getWallet().get("balance")).equals("0"))
                                 {
                                     Toast.makeText(context, "You have not sufficient balance", Toast.LENGTH_SHORT).show();
                                 }else{

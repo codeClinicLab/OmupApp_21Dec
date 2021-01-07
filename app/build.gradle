@@ -1,5 +1,10 @@
 //apply plugin: 'com.android.application'
 apply plugin: 'com.android.application'
+/*apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'*/
 
 android {
     compileSdkVersion 28
@@ -48,7 +53,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
-  //  implementation files('libs/asterisk-java-2.0.3.jar')
+   implementation files('libs/asterisk-java-2.0.2.jar')
     //Lifecycle
     annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-runtime:2.2.0'
@@ -59,9 +64,22 @@ dependencies {
 //    implementation 'co.paystack.android:paystack:3.0.12'
     //Initials drawable library
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
-    implementation 'org.asteriskjava:asterisk-java:2.2.0'
+ //   implementation 'org.asteriskjava:asterisk-java:2.2.0'
     implementation 'co.paystack.android.design.widget:pinpad:1.0.1'
     implementation 'co.paystack.android:paystack:3.0.12'
+
+
+//dagger
+    implementation "com.google.dagger:dagger:2.16"
+    implementation "com.google.dagger:dagger-android-support:2.11"
+//    kapt "com.google.dagger:dagger-compiler:2.11"
+  //  kapt "com.google.dagger:dagger-android-processor:2.16"
+//retrofit
+    api "com.squareup.retrofit2:adapter-rxjava:2.5.0"
+    implementation "com.squareup.retrofit2:retrofit:2.5.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.5.0"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
 
 apply plugin: 'com.google.gms.google-services'

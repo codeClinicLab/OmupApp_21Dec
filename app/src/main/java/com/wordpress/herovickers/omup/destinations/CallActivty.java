@@ -65,8 +65,8 @@ public class CallActivty extends AppCompatActivity implements EndPointListner {
     private String callType;
     private long createdAt;
     private String lastCallDuration = "00:00";
-    private String stringFullName;
-    private String stringPhoneNumber;
+    private String stringFullName="";
+    private String stringPhoneNumber="";
     User user ;
     long elapsedTime;
     Boolean resume = false;
@@ -97,19 +97,18 @@ public class CallActivty extends AppCompatActivity implements EndPointListner {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        // Initialize
 
-        // Initialize Asterisk
-       /* PBXFactory.init(new MyAsteriskSettings());
-
-        AsteriskPBX asteriskPbx = (AsteriskPBX) PBXFactory.getActivePBX();
-        try {
+        /*try {
+            PBXFactory.init(new MyAsteriskSettings());
+            AsteriskPBX asteriskPbx = (AsteriskPBX) PBXFactory.getActivePBX();
             asteriskPbx.createAgiEntryPoint();
         }
-        catch(java.io.IOException | org.asteriskjava.manager.AuthenticationFailedException | org.asteriskjava.manager.TimeoutException e) {
-            Log.d("CreateAgiEntryPoint", "AuthenticationFailed or Timeout");
+        catch(*//*java.io.IOException | org.asteriskjava.manager.AuthenticationFailedException | org.asteriskjava.manager.Timeout*//*Exception e) {
+            Log.d("CreateAgiEntryPoint", "AuthenticationFailed or Timeout  "+e.toString());
             System.out.println(e);
-        }*/
-
+        }
+*/
 
         //Set contact name and phone number
         contactName = findViewById(R.id.contact_name);
@@ -129,8 +128,8 @@ public class CallActivty extends AppCompatActivity implements EndPointListner {
         }else {
             //TODO set Timer to start counting then format properly and store it in @lastCallDuration variable
         }
-        stringFullName = intent.getStringExtra("CONTACT_NAME");
-        stringPhoneNumber = intent.getStringExtra("CONTACT_NUMBER");
+        stringFullName = ""+intent.getStringExtra("CONTACT_NAME");
+        stringPhoneNumber = ""+intent.getStringExtra("CONTACT_NUMBER");
         contactName.setText(stringFullName);
         phoneNumber.setText(stringPhoneNumber);
         //Get the timestamp of when the call starts either incoming or outgoing
@@ -290,8 +289,12 @@ if( (strMinutes).length()==1)
     private String getCombinedId() {
         String userPhoneNumber =""+ user.getPhoneNumber();
         Log.e(TAG,userPhoneNumber+"     "+user);
-        String receiverPhoneNumber = stringPhoneNumber.replaceAll("\\s","");
-        if (receiverPhoneNumber.charAt(0) == '+'){
+        if(stringPhoneNumber.length()>0)
+        {
+            stringPhoneNumber=stringPhoneNumber.replaceAll("\\s","");
+        }
+        String receiverPhoneNumber = stringPhoneNumber;
+        if (receiverPhoneNumber.length()>0 && receiverPhoneNumber.charAt(0) == '+'){
             receiverPhoneNumber = "0"+receiverPhoneNumber.substring(4);
         }
         if (userPhoneNumber.charAt(0) == '+'){

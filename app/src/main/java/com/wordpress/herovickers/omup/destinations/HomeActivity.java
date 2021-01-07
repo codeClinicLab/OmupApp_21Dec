@@ -4,6 +4,10 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import androidx.annotation.NonNull;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,12 +17,14 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.wordpress.herovickers.omup.adapters.ViewPagerAdapter;
+import com.wordpress.herovickers.omup.authentication.WelcomeActivity;
 import com.wordpress.herovickers.omup.destinations.fragments.CallsFragment;
 import com.wordpress.herovickers.omup.destinations.fragments.ContactsFragment;
 import com.wordpress.herovickers.omup.destinations.fragments.KeypadFragment;
@@ -33,15 +39,16 @@ public class HomeActivity extends AppCompatActivity{
 
     private MenuItem prevMenuItem;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
-
+    Handler handler;
+    Runnable r;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        viewPager = findViewById(R.id.viewpager);
         requestAllPermission();
+        viewPager = findViewById(R.id.viewpager);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         //toolBarTitle = findViewById(R.id.toolbar_title);
 
@@ -95,6 +102,27 @@ public class HomeActivity extends AppCompatActivity{
             }
         });
         setupViewPager(viewPager);
+
+        handler = new Handler();
+        r = new Runnable() {
+
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                Toast.makeText(HomeActivity.this, "user is inactive from last 1 minute",Toast.LENGTH_SHORT).show();
+                AuthUI.getInstance()
+                        .signOut(HomeActivity.this)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Intent intent = new Intent(HomeActivity.this, WelcomeActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);                                startActivity(intent);
+                                finish();
+                            }
+                        });   }
+        };
+        startHandler();
     }
 
 
@@ -108,8 +136,10 @@ public class HomeActivity extends AppCompatActivity{
         adapter.addFragment(keypadFragment);
         adapter.addFragment(contactsFragments);
         adapter.addFragment(moreFragment);
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(4);
+        if (viewPager != null) {
+            viewPager.setAdapter(adapter);
+            viewPager.setOffscreenPageLimit(4);
+        }
     }
 
     @Override
@@ -177,6 +207,20 @@ public class HomeActivity extends AppCompatActivity{
     }
 
 
+
+    @Override
+    public void onUserInteraction() {
+        // TODO Auto-generated method stub
+        super.onUserInteraction();
+        stopHandler();//stop first and then start
+        startHandler();
+    }
+    public void stopHandler() {
+        handler.removeCallbacks(r);
+    }
+    public void startHandler() {
+        handler.postDelayed(r, 3*60*1000); //for 5 minutes
+    }
 
 }
 

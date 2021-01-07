@@ -47,6 +47,22 @@
         <item name="android:textSize">30sp</item>
         <!--<item name="android:textAppearance">?android:attr/textAppearanceLarge</item>-->
     </style>
+
+
+    <style name="keyboard_framelayout_button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:background">@drawable/keyboard_button_bg</item>
+
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceLarge</item>-->
+    </style>
     <style name="keyboard_button_extra">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>

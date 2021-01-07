@@ -106,7 +106,7 @@ public class MoreFragment extends Fragment  {
 
                 v = getActivity().findViewById(android.R.id.content);
                 boolean success = EmailIntentBuilder.from(getContext())
-                        .to("support@omupcall.com")
+                        .to("support@omuppcall.com")
                         .start();
 
                 if (!success) {

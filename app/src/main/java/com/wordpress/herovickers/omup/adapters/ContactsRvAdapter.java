@@ -12,6 +12,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,10 +30,12 @@ import com.wordpress.herovickers.omup.utility.RecyclerViewEmptySupport;
 import com.wordpress.herovickers.omup.utility.Utils;
 import com.wordpress.herovickers.omup.viewmodel.FirestoreViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class ContactsRvAdapter extends RecyclerViewEmptySupport.Adapter<ContactsRvAdapter.ViewHolder> {
+
+public class ContactsRvAdapter extends RecyclerViewEmptySupport.Adapter<ContactsRvAdapter.ViewHolder> implements Filterable {
 
     private Context mContext;
 
@@ -39,10 +43,14 @@ public class ContactsRvAdapter extends RecyclerViewEmptySupport.Adapter<Contacts
     private List<ModelContacts> mListContacts;
     private FragmentInteractionListener mListener;
 
+    CustomFilter filter;
+    List<ModelContacts> filterList;
+
 
     public ContactsRvAdapter(Context context, List<ModelContacts> listContacts,
                              FragmentInteractionListener listener) {
         mListContacts = listContacts;
+        filterList=listContacts;
         mListener = listener;
         mContext = context;
     }
@@ -96,7 +104,7 @@ public class ContactsRvAdapter extends RecyclerViewEmptySupport.Adapter<Contacts
                     @Override
                     public void onChanged(User user) {
                         if (user != null){
- if(  String.valueOf(user.getWallet().get("balance")).equals("0.0"))
+ if(  String.valueOf(user.getWallet().get("balance")).equals("0.0") ||   String.valueOf(user.getWallet().get("balance")).equals("0"))
  {
      Toast.makeText(mContext, "You have not sufficient balance", Toast.LENGTH_SHORT).show();
  }else{
@@ -122,7 +130,60 @@ public class ContactsRvAdapter extends RecyclerViewEmptySupport.Adapter<Contacts
         return mListContacts.size();
     }
 
-    class ViewHolder extends RecyclerViewEmptySupport.ViewHolder{
+    @Override
+    public Filter getFilter() {
+        // TODO Auto-generated method stub
+        if(filter == null)
+        {
+            filter=new CustomFilter();
+        }
+
+        return filter;
+    }
+
+    //INNER CLASS
+    class CustomFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            // TODO Auto-generated method stub
+
+            FilterResults results = new FilterResults();
+
+            if (constraint != null && constraint.length() > 0) {
+                //CONSTARINT TO UPPER
+                constraint = constraint.toString().toUpperCase();
+
+                List<ModelContacts> filters = new ArrayList<>();
+
+                //get specific items
+                for (int i = 0; i < filterList.size(); i++) {
+                    if (filterList.get(i).getName().toUpperCase().contains(constraint)) {
+                        ModelContacts p = new ModelContacts(filterList.get(i).getName(), filterList.get(i).getNumber());
+
+                        filters.add(p);
+                    }
+                }
+
+                results.count = filters.size();
+                results.values = filters;
+
+            } else {
+                results.count = filterList.size();
+                results.values = filterList;
+
+            }
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            mListContacts = (ArrayList<ModelContacts>) filterResults.values;
+            notifyDataSetChanged();
+        }
+    }
+        class ViewHolder extends RecyclerViewEmptySupport.ViewHolder{
         TextView contact_name;
         TextView contact_number;
         ImageView callAction;

@@ -113,24 +113,35 @@
                 style="@style/keyboard_number_button"
                 android:text="@string/number_nine" />
         </TableRow>
-        <TableRow style="@style/keyboard_row">
 
 <!--            <TextView
                 android:id="@+id/t9_key_astericks"
                 style="@style/keyboard_number_button"
                 android:text="@string/astericks" />-->
-            <TextView
+        <TableRow style="@style/keyboard_row">
+        <TextView
                 android:id="@+id/t9_key_astericks"
                 style="@style/keyboard_button_extra"
                 android:text="@string/astericks"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
+<FrameLayout
+    style="@style/keyboard_number_button"
 
+    >
             <TextView
                 android:id="@+id/t9_key_0"
                 style="@style/keyboard_number_button"
-                android:text="@string/number_zero" />
 
-<!--
+              android:layout_width="match_parent"  android:text="@string/number_zero" />
+   <!-- <TextView
+        android:id="@+id/t9_key_plus"
+        style="@style/keyboard_number_button"
+android:layout_gravity="bottom"
+        android:layout_height="wrap_content"
+         android:layout_width="match_parent"  android:text="+" />-->
+
+</FrameLayout>
+ <!--
 
             <TextView
                 android:id="@+id/t9_key_hash"

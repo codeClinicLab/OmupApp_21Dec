@@ -1,6 +1,7 @@
 package com.wordpress.herovickers.omup.destinations;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -21,6 +24,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +40,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -44,6 +51,9 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.wordpress.herovickers.omup.R;
 import com.wordpress.herovickers.omup.Repository.FirestoreRepository;
+import com.wordpress.herovickers.omup.api.AllApiResponse;
+import com.wordpress.herovickers.omup.api.AppController;
+import com.wordpress.herovickers.omup.api.interfaces.ApiService;
 import com.wordpress.herovickers.omup.authentication.WelcomeActivity;
 import com.wordpress.herovickers.omup.models.User;
 import com.wordpress.herovickers.omup.utility.PrefsManager;
@@ -55,8 +65,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.inject.Inject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.Manifest.permission.READ_CONTACTS;
 import static com.wordpress.herovickers.omup.utility.Utils.CAMERA;
@@ -79,13 +96,17 @@ public class UserProfileActivity extends AppCompatActivity {
     private FirebaseUser mUser;
     private PrefsManager manager;
     private final int MY_PERMISSON_REQUEST = 984;
+
+    @Inject
+  ApiService  apiService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getTheme().applyStyle(R.style.AppThemeWithTitleBar, true);
+        new AppController().getComponent().inject(UserProfileActivity.this);
         setContentView(R.layout.activity_user_profile);
         setTitle("");
-
         Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         manager = new PrefsManager(this);
@@ -190,7 +211,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     }
 
-    private void editFieldDaialog(String name, String value, final TextView field){
+    private void editFieldDaialog(final String name, final String value, final TextView field){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dia_edit_profile_field, null);
         builder.setView(view);
@@ -205,11 +226,62 @@ public class UserProfileActivity extends AppCompatActivity {
         okay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                field.setText(fieldValue.getText().toString());
-                //Enable button after edit
-                saveStatus = true;
-                setButtonStatus(saveStatus);
-                dialog.dismiss();
+           if(name.equals("Email")){
+/*
+               FirebaseAuth auth = FirebaseAuth.getInstance();
+               String emailAddress = value;
+              User         user = new PrefsManager(UserProfileActivity.this).getUserData();
+
+               String psd=user.getPassword().get("password");
+Log.e("password","password="+psd);
+                AuthCredential credential = EmailAuthProvider.getCredential(emailAddress, psd);
+               auth.getCurrentUser().linkWithCredential(credential)
+                       .addOnCompleteListener(UserProfileActivity.this, new OnCompleteListener<AuthResult>() {
+                           @Override
+                           public void onComplete(@NonNull Task<AuthResult> task) {
+                               if (task.isSuccessful()) {
+                                   Log.d("TAG", "linkWithCredential:success");
+//                            FirebaseUser user = task.getResult().getUser();
+                                   //                          updateUI(user);
+                               } else {
+                                   Log.w("TAG", "linkWithCredential:failure", task.getException());
+*/
+/*
+                            Toast.makeText(AnonymousAuthActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+*//*
+
+                               }
+
+                               // ...
+                           }
+                       });
+               auth.sendPasswordResetEmail(emailAddress)
+                       .addOnCompleteListener(new OnCompleteListener<Void>() {
+                           @Override
+                           public void onComplete(@NonNull Task<Void> task) {
+                               if (task.isSuccessful()) {
+                                   Log.d("TAG", "Email sent.");
+                               }
+                               else{
+                                   Log.d("TAG", "Email not sent.  "+task.getException());
+                               }
+                           }
+                        }
+                                            );
+
+
+*/
+callSendOTPApi(value,fieldValue.getText().toString());
+             }
+
+               field.setText(fieldValue.getText().toString());
+               //Enable button after edit
+               saveStatus = true;
+               setButtonStatus(saveStatus);
+               dialog.dismiss();
+
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -220,6 +292,68 @@ public class UserProfileActivity extends AppCompatActivity {
         });
     }
 
+    public static boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    private void callSendOTPApi(String oldEmail, String newEmail) {
+        if ( oldEmail.equals("")) {
+            Toast.makeText(UserProfileActivity.this,"Please enter email",Toast.LENGTH_LONG).show();
+
+        } else if (!isEmailValid(newEmail)) {
+            Toast.makeText(UserProfileActivity.this,"Enter a valid Email",Toast.LENGTH_LONG).show();
+              }else if (checkConnection(UserProfileActivity.this)) {
+          callApi(oldEmail);
+        } else {
+            Toast.makeText(UserProfileActivity.this,"Please Check Internet Connection",Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    private void callApi(String oldEmail) {
+
+        apiService.getOTPRes(oldEmail)
+                .enqueue(new Callback<AllApiResponse.OTPRespModel>() {
+            @Override
+            public void onResponse(Call<AllApiResponse.OTPRespModel> call, Response<AllApiResponse.OTPRespModel> response) {
+                if(response.isSuccessful() && response.body().code==200){
+                    Toast.makeText(UserProfileActivity.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
+                }
+else
+                {Toast.makeText(UserProfileActivity.this, "401", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AllApiResponse.OTPRespModel> call, Throwable t) {
+                Toast.makeText(UserProfileActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
+
+            }
+
+        });
+    }
+
+    public static boolean checkConnection(Context context) {
+        final ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetworkInfo = connMgr.getActiveNetworkInfo();
+
+        if (activeNetworkInfo != null) { // connected to the internet
+            Toast.makeText(context, activeNetworkInfo.getTypeName(), Toast.LENGTH_SHORT).show();
+
+            if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                // connected to wifi
+                return true;
+            } else if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                // connected to the mobile provider's data plan
+                return true;
+            }
+        }
+        return false;
+    }
     private void setUserData() {
         FirestoreViewModel firestoreViewModel = ViewModelProviders.of(this).get(FirestoreViewModel.class);
         LiveData<User> userLiveData = firestoreViewModel.getUserData();
@@ -265,6 +399,8 @@ public class UserProfileActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Intent intent = new Intent(UserProfileActivity.this, WelcomeActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         finish();
                     }

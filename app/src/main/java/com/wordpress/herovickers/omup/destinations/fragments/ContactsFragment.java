@@ -2,6 +2,10 @@ package com.wordpress.herovickers.omup.destinations.fragments;
 
 import android.content.Intent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.Toast;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -39,7 +43,8 @@ public class ContactsFragment extends Fragment implements FragmentInteractionLis
     private LinearLayoutManager mManager;
     private FloatingActionButton addNewContact;
     Cursor cursor;
-
+    EditText etSearchContact;
+    ContactsRvAdapter adapter;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
 
@@ -56,9 +61,8 @@ public class ContactsFragment extends Fragment implements FragmentInteractionLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
-
+        etSearchContact= rootView.findViewById(R.id.etSearchContact);
         addNewContact = rootView.findViewById(R.id.fab_add_contact);
         addNewContact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +72,27 @@ public class ContactsFragment extends Fragment implements FragmentInteractionLis
                 startActivity(intent);
             }
         });
+        etSearchContact.addTextChangedListener(new TextWatcher() {
 
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+              if(adapter!=null)
+                  adapter.getFilter().filter(cs);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
         return rootView;
 
     }
@@ -93,7 +117,7 @@ public class ContactsFragment extends Fragment implements FragmentInteractionLis
             Log.d("request permission done", "contact should read" );
         }else {
             Log.d("no request", "contact should read" );
-            ContactsRvAdapter adapter = new ContactsRvAdapter(getContext(), getContacts(), this);
+              adapter = new ContactsRvAdapter(getContext(), getContacts(), this);
             mRecycler.setAdapter(adapter);
                 
         }
@@ -165,7 +189,7 @@ public void onRequestPermissionsResult(int requestCode, @NonNull String[] permis
 
                 String phonenumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
-
+//if(name.strSearched)
                 list.add(new ModelContacts(name, phonenumber));
 
         } catch(Exception e){

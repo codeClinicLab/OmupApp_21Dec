@@ -48,7 +48,7 @@ public class RechargeDialogFragment extends DialogFragment {
             amount.setBackground(getResources().getDrawable(R.drawable.red_border_background));
         }else if (Integer.valueOf(amountHere) < 500){
             amount.setBackground(getResources().getDrawable(R.drawable.red_border_background));
-            Toast.makeText(view.getContext(), "must be at least N500", Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(), "must be at least US 500", Toast.LENGTH_SHORT).show();
         }else {
             Intent intent = new Intent(view.getContext(), BuyCreditActivity.class);
             intent.putExtra("amount", Double.valueOf(amountHere));

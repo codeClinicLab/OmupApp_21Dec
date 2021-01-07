@@ -4,14 +4,23 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.wordpress.herovickers.omup.R;
 import com.wordpress.herovickers.omup.destinations.CallActivty;
+import com.wordpress.herovickers.omup.destinations.ContactDetailsActivity;
+import com.wordpress.herovickers.omup.models.User;
+import com.wordpress.herovickers.omup.viewmodel.FirestoreViewModel;
 
 
 public class KeypadFragment extends Fragment{
@@ -43,9 +52,25 @@ public class KeypadFragment extends Fragment{
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View rootView) {
+                /*FirestoreViewModel firestoreViewModel = ViewModelProviders.of((FragmentActivity) getContext()).get(FirestoreViewModel.class);
+                LiveData<User> userLiveData = firestoreViewModel.getUserData();
+                userLiveData.observe((FragmentActivity) getContext(), new Observer<User>() {
+                    @Override
+                    public void onChanged(User user) {
+                        if (user != null) {
+                            if (String.valueOf(user.getWallet().get("balance")).equals("0.0") || String.valueOf(user.getWallet().get("balance")).equals("0")) {
+                                Toast.makeText( getContext(), "You have not sufficient balance", Toast.LENGTH_SHORT).show();
+                            } else {
+                            }
+                        }
+                    }
+                });*/
                 Intent intent = new Intent(getActivity(), CallActivty.class);
-                intent.putExtra("phone", phoneNumber.getText().toString());
+                intent.putExtra("CONTACT_NUMBER", phoneNumber.getText().toString());
+                intent.putExtra("CONTACT_NAME", phoneNumber.getText().toString());
+                intent.setType("Outgoing");
                 startActivity(intent);
+
             }
         });
 

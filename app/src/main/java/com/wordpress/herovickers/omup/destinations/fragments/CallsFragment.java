@@ -39,7 +39,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class CallsFragment extends Fragment implements FragmentInteractionListener {
-
     private TextView firstName;
     private CircleImageView profilImage;
     private TextView walletBalance;

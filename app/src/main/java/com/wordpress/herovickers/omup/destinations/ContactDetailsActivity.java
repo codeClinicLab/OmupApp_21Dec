@@ -3,6 +3,7 @@ package com.wordpress.herovickers.omup.destinations;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.wordpress.herovickers.omup.R;
 import com.wordpress.herovickers.omup.adapters.RecentCallAdapter;
@@ -62,15 +64,26 @@ public class ContactDetailsActivity extends AppCompatActivity {
         actionCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ContactDetailsActivity.this, CallActivty.class);
-                intent.putExtra("CONTACT_NAME", contact_name);
-                intent.putExtra("CONTACT_NUMBER", contact_number);
-                intent.setType("Outgoing");
-                startActivity(intent);
-            }
-        });
-
-        title_text.setText(contact_name);
+                FirestoreViewModel firestoreViewModel = ViewModelProviders.of(ContactDetailsActivity.this).get(FirestoreViewModel.class);
+                LiveData<User> userLiveData = firestoreViewModel.getUserData();
+                userLiveData.observe(ContactDetailsActivity.this, new Observer<User>() {
+                    @Override
+                    public void onChanged(User user) {
+                        if (user != null) {
+                            if (String.valueOf(user.getWallet().get("balance")).equals("0.0") || String.valueOf(user.getWallet().get("balance")).equals("0")) {
+                                Toast.makeText(ContactDetailsActivity.this, "You have not sufficient balance", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Intent intent = new Intent(ContactDetailsActivity.this, CallActivty.class);
+                                intent.putExtra("CONTACT_NAME", contact_name);
+                                intent.putExtra("CONTACT_NUMBER", contact_number);
+                                intent.setType("Outgoing");
+                                startActivity(intent);
+                            }
+                        }
+                    }
+                });
+        }});
+         title_text.setText(contact_name);
         number_text.setText(contact_number);
 
         setUpRecyclerView();
