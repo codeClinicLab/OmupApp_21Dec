@@ -109,16 +109,16 @@ public class HomeActivity extends AppCompatActivity{
             @Override
             public void run() {
                 // TODO Auto-generated method stub
-                Toast.makeText(HomeActivity.this, "user is inactive from last 1 minute",Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "user is inactive from last 3 minute",Toast.LENGTH_SHORT).show();
                 AuthUI.getInstance()
                         .signOut(HomeActivity.this)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Intent intent = new Intent(HomeActivity.this, WelcomeActivity.class);
+                               /* Intent intent = new Intent(HomeActivity.this, WelcomeActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);                                startActivity(intent);
-                                finish();
+                                finish();*/
                             }
                         });   }
         };
@@ -219,7 +219,7 @@ public class HomeActivity extends AppCompatActivity{
         handler.removeCallbacks(r);
     }
     public void startHandler() {
-        handler.postDelayed(r, 3*60*1000); //for 5 minutes
+        handler.postDelayed(r, 3*60*1000);
     }
 
 }

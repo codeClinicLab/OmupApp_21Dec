@@ -1,5 +1,6 @@
 package com.wordpress.herovickers.omup.destinations;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -9,10 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wordpress.herovickers.omup.R;
 import com.wordpress.herovickers.omup.adapters.WalletTransactionAdapter;
@@ -26,8 +29,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class FundingActivity extends AppCompatActivity {
+import sqip.Card;
+import sqip.CardDetails;
+import sqip.CardEntry;
 
+import static sqip.CardEntry.DEFAULT_CARD_ENTRY_REQUEST_CODE;
+
+public class FundingActivity extends AppCompatActivity {
     TextView balance;
     TextView lastRechargeDate;
     TextView currencyType;
@@ -59,6 +67,11 @@ public class FundingActivity extends AppCompatActivity {
                 //Go to payment activity
                 RechargeDialogFragment dialogFragment = new RechargeDialogFragment();
                 dialogFragment.show(getSupportFragmentManager(), "");
+/*
+
+
+
+*/
             }
         });
         transferFund.setOnClickListener(new View.OnClickListener() {
@@ -116,4 +129,16 @@ public class FundingActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+/*
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        //   super.onActivityResult(requestCode, resultCode, data);
+
+    }
+*/
+
+
 }

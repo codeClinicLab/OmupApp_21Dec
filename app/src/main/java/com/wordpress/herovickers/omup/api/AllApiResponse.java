@@ -6,7 +6,7 @@ import java.util.List;
 
 public class AllApiResponse {
     public class OTPRespModel {
-         @SerializedName("message")
+        @SerializedName("message")
         @Expose
         public String message;
         @SerializedName("status")
@@ -18,6 +18,14 @@ public class AllApiResponse {
         @SerializedName("verification_code")
         @Expose
         public Integer verificationCode;
+
+    }
+
+
+    public class PayFundTransferModel {
+        @SerializedName("is_vaild")
+                @Expose
+        public Integer isVaild;
 
     }
 }

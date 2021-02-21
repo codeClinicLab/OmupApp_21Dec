@@ -99,17 +99,28 @@ public class CallActivty extends AppCompatActivity implements EndPointListner {
         StrictMode.setThreadPolicy(policy);
         // Initialize
 
-        /*try {
+/*
+        try {
             PBXFactory.init(new MyAsteriskSettings());
             AsteriskPBX asteriskPbx = (AsteriskPBX) PBXFactory.getActivePBX();
             asteriskPbx.createAgiEntryPoint();
         }
-        catch(*//*java.io.IOException | org.asteriskjava.manager.AuthenticationFailedException | org.asteriskjava.manager.Timeout*//*Exception e) {
+        catch(java.io.IOException | org.asteriskjava.manager.AuthenticationFailedException | org.asteriskjava.manager.TimeoutException e) {
             Log.d("CreateAgiEntryPoint", "AuthenticationFailed or Timeout  "+e.toString());
             System.out.println(e);
         }
 */
+        // Initialize Asterisk
+        try {
+            PBXFactory.init(new MyAsteriskSettings());
 
+            AsteriskPBX asteriskPbx = (AsteriskPBX) PBXFactory.getActivePBX();
+            asteriskPbx.createAgiEntryPoint();
+        }
+        catch(Exception e) {
+            Log.d("CreateAgiEntryPoint", "AuthenticationFailed or Timeout  "+e.toString());
+            System.out.println(e);
+        }
         //Set contact name and phone number
         contactName = findViewById(R.id.contact_name);
         phoneNumber = findViewById(R.id.phone_number);
@@ -391,9 +402,12 @@ if( (strMinutes).length()==1)
             // in your /etc/asterisk/sip.d file (assuming you are using a SIP trunk).
             // The trunk is used to select which SIP trunk to dial through.
             Trunk trunk = pbx.buildTrunk("5244877354gw1");
+/*your server is ready, SIP credential to test are extensions 101, 102, 103, 104 all password test1234 host = 80.211.134.130:8631
+SIP port is 8631, you can register these extensions and call each other, in case of any help required please let me know*/
+
 
             // We are going to dial from extension 100
-            EndPoint from = pbx.buildEndPoint(TechType.SIP, "100");
+            EndPoint from = pbx.buildEndPoint(TechType.SIP, "101");
             // Provide confirmation to the agent which no. we are dialing by
             // showing it on their handset.
             CallerID fromCallerID = pbx.buildCallerID("12028883999", "Dialing");

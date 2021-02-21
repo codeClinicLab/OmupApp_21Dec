@@ -3,16 +3,20 @@ package com.wordpress.herovickers.omup.destinations.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.wordpress.herovickers.omup.R;
@@ -27,6 +31,11 @@ import com.wordpress.herovickers.omup.viewmodel.FirestoreViewModel;
 
 import de.cketti.mailto.EmailIntentBuilder;
 import de.hdodenhof.circleimageview.CircleImageView;
+import sqip.Card;
+import sqip.CardDetails;
+import sqip.CardEntry;
+
+import static sqip.CardEntry.DEFAULT_CARD_ENTRY_REQUEST_CODE;
 
 public class MoreFragment extends Fragment  {
     private View v;
@@ -69,6 +78,7 @@ public class MoreFragment extends Fragment  {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), FundingActivity.class);
                 startActivity(intent);
+
             }
         });
 
@@ -131,4 +141,9 @@ public class MoreFragment extends Fragment  {
             }
         });
     }
+
+
+
+
+
 }

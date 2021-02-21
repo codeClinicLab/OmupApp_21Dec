@@ -31,6 +31,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,11 +49,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.wordpress.herovickers.omup.R;
 import com.wordpress.herovickers.omup.Repository.FirestoreRepository;
 import com.wordpress.herovickers.omup.api.AllApiResponse;
 import com.wordpress.herovickers.omup.api.AppController;
+import com.wordpress.herovickers.omup.api.HttpModule;
 import com.wordpress.herovickers.omup.api.interfaces.ApiService;
 import com.wordpress.herovickers.omup.authentication.WelcomeActivity;
 import com.wordpress.herovickers.omup.models.User;
@@ -76,6 +79,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static android.view.View.GONE;
 import static com.wordpress.herovickers.omup.utility.Utils.CAMERA;
 import static com.wordpress.herovickers.omup.utility.Utils.GALLERY;
 
@@ -96,7 +100,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private FirebaseUser mUser;
     private PrefsManager manager;
     private final int MY_PERMISSON_REQUEST = 984;
-
+    RelativeLayout progressBarLayout;
     @Inject
   ApiService  apiService;
 
@@ -104,7 +108,7 @@ public class UserProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getTheme().applyStyle(R.style.AppThemeWithTitleBar, true);
-        new AppController().getComponent().inject(UserProfileActivity.this);
+      //  new AppController().getComponent().inject(this);
         setContentView(R.layout.activity_user_profile);
         setTitle("");
         Toolbar toolbar = findViewById(R.id.main_toolbar);
@@ -115,6 +119,7 @@ public class UserProfileActivity extends AppCompatActivity {
         firstName = findViewById(R.id.first_name);
         lastName = findViewById(R.id.last_name);
         email = findViewById(R.id.email);
+        progressBarLayout  = findViewById(R.id.progress_bar_layout);
         phoneNumber = findViewById(R.id.phone_number);
         country = findViewById(R.id.country);
         profilImage = findViewById(R.id.photo_view);
@@ -226,64 +231,22 @@ public class UserProfileActivity extends AppCompatActivity {
         okay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+Log.e("after clicked=",""+name);
            if(name.equals("Email")){
-/*
-               FirebaseAuth auth = FirebaseAuth.getInstance();
-               String emailAddress = value;
-              User         user = new PrefsManager(UserProfileActivity.this).getUserData();
-
-               String psd=user.getPassword().get("password");
-Log.e("password","password="+psd);
-                AuthCredential credential = EmailAuthProvider.getCredential(emailAddress, psd);
-               auth.getCurrentUser().linkWithCredential(credential)
-                       .addOnCompleteListener(UserProfileActivity.this, new OnCompleteListener<AuthResult>() {
-                           @Override
-                           public void onComplete(@NonNull Task<AuthResult> task) {
-                               if (task.isSuccessful()) {
-                                   Log.d("TAG", "linkWithCredential:success");
-//                            FirebaseUser user = task.getResult().getUser();
-                                   //                          updateUI(user);
-                               } else {
-                                   Log.w("TAG", "linkWithCredential:failure", task.getException());
-*/
-/*
-                            Toast.makeText(AnonymousAuthActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-*//*
-
-                               }
-
-                               // ...
-                           }
-                       });
-               auth.sendPasswordResetEmail(emailAddress)
-                       .addOnCompleteListener(new OnCompleteListener<Void>() {
-                           @Override
-                           public void onComplete(@NonNull Task<Void> task) {
-                               if (task.isSuccessful()) {
-                                   Log.d("TAG", "Email sent.");
-                               }
-                               else{
-                                   Log.d("TAG", "Email not sent.  "+task.getException());
-                               }
-                           }
-                        }
-                                            );
-
-
-*/
-callSendOTPApi(value,fieldValue.getText().toString());
+               dialog.dismiss();
+callSendOTPApi(value,fieldValue.getText().toString()/*,dialog*/);
              }
-
+else {
                field.setText(fieldValue.getText().toString());
                //Enable button after edit
                saveStatus = true;
                setButtonStatus(saveStatus);
                dialog.dismiss();
+           }
 
             }
         });
+
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -299,42 +262,82 @@ callSendOTPApi(value,fieldValue.getText().toString());
         return matcher.matches();
     }
 
-    private void callSendOTPApi(String oldEmail, String newEmail) {
-        if ( oldEmail.equals("")) {
+    private void callSendOTPApi(String oldEmail, final String newEmail) {
+        if ( newEmail.equals("")) {
             Toast.makeText(UserProfileActivity.this,"Please enter email",Toast.LENGTH_LONG).show();
-
         } else if (!isEmailValid(newEmail)) {
             Toast.makeText(UserProfileActivity.this,"Enter a valid Email",Toast.LENGTH_LONG).show();
-              }else if (checkConnection(UserProfileActivity.this)) {
-          callApi(oldEmail);
+              }
+        else if (checkConnection(UserProfileActivity.this)) {
+            Log.e("callApi",""+oldEmail);
+            progressBarLayout.setVisibility(View.VISIBLE);
+            ApiService apiService = HttpModule.getAppClient().create(ApiService.class);
+            apiService.getOTPRes(oldEmail)
+                    .enqueue(new Callback<AllApiResponse.OTPRespModel>() {
+                        @Override
+                        public void onResponse(Call<AllApiResponse.OTPRespModel> call, Response<AllApiResponse.OTPRespModel> response) {
+                            Log.d("callApi response",""+  new Gson().toJson(response.body()) );
+                            progressBarLayout.setVisibility(GONE);
+                            Toast.makeText(UserProfileActivity.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
+                            if(response.isSuccessful() && response.body().code==200){
+                                AlertDialog.Builder builder = new AlertDialog.Builder(UserProfileActivity.this);
+                                final String strVerifyCode=""+response.body().verificationCode;
+
+                                View view = getLayoutInflater().inflate(R.layout.dia_edit_profile_field, null);
+                                builder.setView(view);
+                                TextView fieldName = view.findViewById(R.id.field_name);
+                                final EditText fieldValue = view.findViewById(R.id.field_value);
+                                fieldValue.setHint("OTP");
+                                Button cancel = view.findViewById(R.id.btn_cancel);
+                                Button okay = view.findViewById(R.id.btn_okay);
+                                fieldName.setText("Enter OTP");
+                                 final AlertDialog dialog = builder.create();
+                                dialog.show();
+                                okay.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Log.e("otpverify","apiOtp="+strVerifyCode+"   fieldvalue="+fieldValue.getText());
+   if(strVerifyCode.equals(fieldValue.getText().toString().replaceAll(" ",""))){
+       email.setText(newEmail);
+       //Enable button after edit
+       saveStatus = true;
+       setButtonStatus(saveStatus);
+       dialog.dismiss();
+
+   }else {
+       Toast.makeText(UserProfileActivity.this, "OTP is not confirmed", Toast.LENGTH_SHORT).show();
+   }
+                                    }
+                                }
+                                );
+cancel.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        dialog.dismiss();
+
+    }
+});
+
+
+                            }
+
+                         }
+
+                        @Override
+                        public void onFailure(Call<AllApiResponse.OTPRespModel> call, Throwable t) {
+ progressBarLayout.setVisibility(GONE);
+                            Toast.makeText(UserProfileActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    });
+
         } else {
             Toast.makeText(UserProfileActivity.this,"Please Check Internet Connection",Toast.LENGTH_LONG).show();
         }
 
     }
 
-    private void callApi(String oldEmail) {
-
-        apiService.getOTPRes(oldEmail)
-                .enqueue(new Callback<AllApiResponse.OTPRespModel>() {
-            @Override
-            public void onResponse(Call<AllApiResponse.OTPRespModel> call, Response<AllApiResponse.OTPRespModel> response) {
-                if(response.isSuccessful() && response.body().code==200){
-                    Toast.makeText(UserProfileActivity.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
-                }
-else
-                {Toast.makeText(UserProfileActivity.this, "401", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AllApiResponse.OTPRespModel> call, Throwable t) {
-                Toast.makeText(UserProfileActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
-
-            }
-
-        });
-    }
 
     public static boolean checkConnection(Context context) {
         final ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

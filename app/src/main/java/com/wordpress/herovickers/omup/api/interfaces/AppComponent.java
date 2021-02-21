@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
+
 @Singleton
 @Component(modules = {HttpModule.class, ApplicationModule.class})
 public interface AppComponent {

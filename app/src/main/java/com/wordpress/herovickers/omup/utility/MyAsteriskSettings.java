@@ -1,6 +1,7 @@
 package com.wordpress.herovickers.omup.utility;
 
 import android.text.format.Formatter;
+import android.util.Log;
 
 //import org.asteriskjava.pbx.internal.asterisk.AsteriskSettings;
 import org.asteriskjava.pbx.DefaultAsteriskSettings;
@@ -12,7 +13,7 @@ import java.util.Enumeration;
 
 public class MyAsteriskSettings extends DefaultAsteriskSettings
 {
-
+String TAG="MyAsteriskSettings ";
     @Override
     public String getManagerPassword() {
         // this password MUST match the password (secret=) in manager.conf
@@ -28,8 +29,8 @@ public class MyAsteriskSettings extends DefaultAsteriskSettings
     @Override
     public String getAsteriskIP() {
         // The IP address or FQDN of your Asterisk server.
-//        return "2.2.2.2";
-        return "68.183.219.216";
+       return "80.211.134.130";
+   //  return "68.183.219.216";
     }
 
     @Override
@@ -46,13 +47,13 @@ public class MyAsteriskSettings extends DefaultAsteriskSettings
                     InetAddress inetAddress = enumIpAddr.nextElement();
                     if (!inetAddress.isLoopbackAddress()) {
                         String ip = Formatter.formatIpAddress(inetAddress.hashCode());
-//                        Log.i(TAG, "***** IP="+ ip);
+                   Log.i(TAG, "***** IP="+ ip);
                         return ip;
                     }
                 }
             }
         } catch (SocketException ex) {
-//            Log.e(TAG, ex.toString());
+        Log.e(TAG, ex.toString());
         }
         return null;
     }

@@ -26,6 +26,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity android:name=".destinations.TransferFundActivity"></activity>
         <activity android:name=".authentication.PasswordAuthentication" />
@@ -68,6 +69,14 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".destinations.ContactDetailsActivity" />
         <activity android:name=".destinations.RatesActivity" />
+
+
+        <meta-data
+            android:name="sqip.SQUARE_APPLICATION_ID"
+            android:value="sandbox-sq0idb-g5xrvqybWnTXo6sRCUv4BA"/>
+        <!--test sandbox      sandbox-sq0idb-g5xrvqybWnTXo6sRCUv4BA-->
+        <!--test sandbox      sandbox-sq0idb-g5xrvqybWnTXo6sRCUv4BA-->
+
     </application>
 
 </manifest>

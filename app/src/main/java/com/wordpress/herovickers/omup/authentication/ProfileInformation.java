@@ -100,7 +100,10 @@ public class ProfileInformation extends AppCompatActivity {
         String country = mCountry.getText().toString();
         String email = mEmail.getText().toString();
         String salt = PasswordUtils.getSalt(30);
-        String password = PasswordUtils.generateSecurePassword(mPassword.getText().toString(), salt);
+        String password = mPassword.getText().toString();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            password = PasswordUtils.generateSecurePassword(mPassword.getText().toString(), salt);
+        }
         FirebaseAuth auth = FirebaseAuth.getInstance();
         AuthCredential credential = EmailAuthProvider.getCredential(email, password);
         auth.getCurrentUser().linkWithCredential(credential)
